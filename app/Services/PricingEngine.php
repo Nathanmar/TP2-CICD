@@ -88,5 +88,56 @@ class PricingEngine
 
         return max(0.0, $subtotal - $discount);
     }
+
+    /**
+     * Retourne le multiplicateur de prix selon l'heure et le jour (Surge pricing).
+     * 
+     * @param string $hour L'heure au format "15h" ou "15:00"
+     * @param string $dayOfWeek Le jour en français ("lundi", "mardi", etc.) ou anglais
+     * @return float Le multiplicateur
+     * @throws InvalidArgumentException
+     */
+    public static function calculateSurge(string $hour, string $dayOfWeek): float
+    {
+        $parts = explode(':', str_replace('h', ':', strtolower($hour)));
+        $h = (int) $parts[0];
+        $m = isset($parts[1]) ? (int) $parts[1] : 0;
+        $t = $h + ($m / 60);
+
+        $day = strtolower($dayOfWeek);
+
+        // En dehors des heures d'ouverture (avant 10h, à partir de 22h)
+        if ($t < 10.0 || $t >= 22.0) {
+            return 0.0;
+        }
+
+        // Dimanche toute la journée
+        if (in_array($day, ['dimanche', 'sunday'])) {
+            return 1.2;
+        }
+
+        // Vendredi et Samedi
+        if (in_array($day, ['vendredi', 'friday', 'samedi', 'saturday'])) {
+            if ($t >= 19.0) {
+                // Vendredi-Samedi soir, 19h-22h
+                return 1.8;
+            }
+            return 1.0;
+        }
+
+        // Lundi à Jeudi
+        if (in_array($day, ['lundi', 'monday', 'mardi', 'tuesday', 'mercredi', 'wednesday', 'jeudi', 'thursday'])) {
+            if ($t >= 12.0 && $t < 13.5) { // 12h-13h30
+                return 1.3;
+            }
+            if ($t >= 19.0 && $t < 21.0) { // 19h-21h
+                return 1.5;
+            }
+            return 1.0; // Le reste du temps
+        }
+
+        throw new InvalidArgumentException("Jour de la semaine non reconnu: $dayOfWeek");
+    }
 }
+
 
