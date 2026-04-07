@@ -100,3 +100,4 @@ class PricingEngineTest extends TestCase
         $this->assertEquals(2.00, $result);
     }
 }
+
