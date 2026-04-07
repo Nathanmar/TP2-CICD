@@ -1,0 +1,20 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    paths:
+        - app/
+        - bootstrap/
+        - config/
+        - routes/
+        - tests/
+
+    level: 5
+
+    ignoreErrors:
+        - identifier: missingType.iterableValue
+
+    excludePaths:
+        - */vendor/*
+        - */node_modules/*
+        - */storage/*
