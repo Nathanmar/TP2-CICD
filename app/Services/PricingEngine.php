@@ -138,6 +138,65 @@ class PricingEngine
 
         throw new InvalidArgumentException("Jour de la semaine non reconnu: $dayOfWeek");
     }
+
+    /**
+     * Calcule le total final d'une commande incluant les articles, la livraison, le surge pricing et les promotions.
+     * 
+     * @return array{subtotal: float, discount: float, deliveryFee: float, surge: float, total: float}
+     * @throws InvalidArgumentException|\Exception
+     */
+    public static function calculateOrderTotal(
+        array $items,
+        float|int $distance,
+        float|int $weight,
+        ?string $promoCode,
+        string $hour,
+        string $dayOfWeek,
+        array $promoCodes = []
+    ): array {
+        if (empty($items)) {
+            throw new InvalidArgumentException("Le panier ne peut pas être vide.");
+        }
+
+        $subtotal = 0.0;
+        foreach ($items as $item) {
+            if (!isset($item['price']) || $item['price'] < 0) {
+                throw new InvalidArgumentException("Le prix d'un article ne peut pas être négatif.");
+            }
+            if (!isset($item['quantity']) || $item['quantity'] <= 0) {
+                throw new InvalidArgumentException("La quantité d'un article doit être supérieure à 0.");
+            }
+            $subtotal += $item['price'] * $item['quantity'];
+        }
+
+        $surge = self::calculateSurge($hour, $dayOfWeek);
+        if ($surge === 0.0) {
+            throw new \Exception("Le restaurant est fermé en dehors des heures d'ouverture (avant 10h, après 22h).");
+        }
+
+        $baseDeliveryFee = self::calculateDeliveryFee($distance, $weight);
+        if ($baseDeliveryFee === null) {
+            throw new \Exception("La livraison est refusée pour cette distance (hors zone).");
+        }
+        $deliveryFee = $baseDeliveryFee * $surge;
+
+        $discount = 0.0;
+        if (!empty($promoCode)) {
+            $discountedSubtotal = self::applyPromoCode($subtotal, $promoCode, $promoCodes);
+            $discount = $subtotal - $discountedSubtotal;
+        }
+
+        $total = ($subtotal - $discount) + $deliveryFee;
+
+        return [
+            'subtotal'    => round($subtotal, 2),
+            'discount'    => round($discount, 2),
+            'deliveryFee' => round($deliveryFee, 2),
+            'surge'       => round($surge, 2),
+            'total'       => round($total, 2)
+        ];
+    }
 }
+
 
 
