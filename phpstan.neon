@@ -12,7 +12,8 @@ parameters:
     level: 5
 
     ignoreErrors:
-        - identifier: missingType.iterableValue
+        - identifier: method.alreadyNarrowedType
+        - identifier: class.notFound
 
     excludePaths:
         - */vendor/*

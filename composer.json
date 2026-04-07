@@ -61,7 +61,7 @@
             "vendor/bin/phpcbf"
         ],
         "analyze": [
-            "vendor/bin/phpstan analyse"
+            "vendor/bin/phpstan analyse --memory-limit=1G"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",

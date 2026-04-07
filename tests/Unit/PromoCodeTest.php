@@ -13,7 +13,7 @@ class PromoCodeTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $today = date('Y-m-d');
         $yesterday = date('Y-m-d', strtotime('-1 day'));
         $tomorrow = date('Y-m-d', strtotime('+1 day'));

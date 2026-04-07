@@ -28,7 +28,7 @@ class OrderController extends Controller
                 $request->input('dayOfWeek', 'lundi'),
                 $this->promoCodes
             );
-            
+
             return response()->json($result, 200);
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
@@ -51,7 +51,7 @@ class OrderController extends Controller
             // Génération d'un ID unique et stockage en mémoire via le Cache
             $id = uniqid('order_');
             $order = array_merge(['id' => $id, 'items' => $request->input('items')], $result);
-            
+
             Cache::put('orders.' . $id, $order);
 
             return response()->json($order, 201);
@@ -63,11 +63,11 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Cache::get('orders.' . $id);
-        
+
         if (!$order) {
             return response()->json(['error' => 'Commande introuvable'], 404);
         }
-        
+
         return response()->json($order, 200);
     }
 
@@ -83,14 +83,14 @@ class OrderController extends Controller
         try {
             // application "virtuelle"
             $newSubtotal = PricingEngine::applyPromoCode((float) $subtotal, $code, $this->promoCodes);
-            
+
             return response()->json([
                 'valid' => true,
                 'discount' => round($subtotal - $newSubtotal, 2),
                 'newSubtotal' => round($newSubtotal, 2)
             ], 200);
         } catch (InvalidArgumentException $e) {
-            // Différenciation de l'erreur 404 pour un code non trouvé 
+            // Différenciation de l'erreur 404 pour un code non trouvé
             if (str_contains(strtolower($e->getMessage()), 'inconnu') || str_contains(strtolower($e->getMessage()), 'invalide')) {
                 return response()->json(['error' => $e->getMessage()], 404);
             }

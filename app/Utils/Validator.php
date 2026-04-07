@@ -22,7 +22,7 @@ class Validator
     public static function isValidPassword(?string $password): array
     {
         $errors = [];
-        
+
         if ($password === null || strlen($password) < 8) {
             $errors[] = 'Minimum 8 caracteres';
         }
@@ -53,7 +53,7 @@ class Validator
         if (!is_int($age)) {
             return false;
         }
-        
+
         return $age >= 0 && $age <= 150;
     }
 }

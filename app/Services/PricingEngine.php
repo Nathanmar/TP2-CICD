@@ -8,7 +8,7 @@ class PricingEngine
 {
     /**
      * Calcule les frais de livraison selon la distance et le poids de la commande.
-     * 
+     *
      * @param float|int $distance Distance en kilomètres
      * @param float|int $weight Poids en kilogrammes
      * @return float|null Retourne le montant en euros, ou null si la livraison est refusée
@@ -41,7 +41,7 @@ class PricingEngine
 
     /**
      * Applique un code promo au sous-total.
-     * 
+     *
      * @param float $subtotal
      * @param string|null $promoCode
      * @param array $promoCodes
@@ -91,7 +91,7 @@ class PricingEngine
 
     /**
      * Retourne le multiplicateur de prix selon l'heure et le jour (Surge pricing).
-     * 
+     *
      * @param string $hour L'heure au format "15h" ou "15:00"
      * @param string $dayOfWeek Le jour en français ("lundi", "mardi", etc.) ou anglais
      * @return float Le multiplicateur
@@ -141,7 +141,7 @@ class PricingEngine
 
     /**
      * Calcule le total final d'une commande incluant les articles, la livraison, le surge pricing et les promotions.
-     * 
+     *
      * @return array{subtotal: float, discount: float, deliveryFee: float, surge: float, total: float}
      * @throws InvalidArgumentException|\Exception
      */
@@ -197,6 +197,3 @@ class PricingEngine
         ];
     }
 }
-
-
-

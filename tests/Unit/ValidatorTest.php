@@ -61,7 +61,7 @@ class ValidatorTest extends TestCase
     {
         // Act
         $result = Validator::isValidPassword("Passw0rd!");
-        
+
         // Assert
         $this->assertTrue($result['valid']);
         $this->assertEmpty($result['errors']);
@@ -71,7 +71,7 @@ class ValidatorTest extends TestCase
     {
         // Act
         $result = Validator::isValidPassword("short");
-        
+
         // Assert
         $this->assertFalse($result['valid']);
         $this->assertContains('Minimum 8 caracteres', $result['errors']);
@@ -84,7 +84,7 @@ class ValidatorTest extends TestCase
     {
         // Act
         $result = Validator::isValidPassword("alllowercase1!");
-        
+
         // Assert
         $this->assertFalse($result['valid']);
         $this->assertContains('Au moins 1 majuscule', $result['errors']);
@@ -94,7 +94,7 @@ class ValidatorTest extends TestCase
     {
         // Act
         $result = Validator::isValidPassword("ALLUPPERCASE1!");
-        
+
         // Assert
         $this->assertFalse($result['valid']);
         $this->assertContains('Au moins 1 minuscule', $result['errors']);
@@ -104,7 +104,7 @@ class ValidatorTest extends TestCase
     {
         // Act
         $result = Validator::isValidPassword("NoDigits!here");
-        
+
         // Assert
         $this->assertFalse($result['valid']);
         $this->assertContains('Au moins 1 chiffre', $result['errors']);
@@ -114,7 +114,7 @@ class ValidatorTest extends TestCase
     {
         // Act
         $result = Validator::isValidPassword("NoSpecial1here");
-        
+
         // Assert
         $this->assertFalse($result['valid']);
         $this->assertContains('Au moins 1 caractere special', $result['errors']);
@@ -124,7 +124,7 @@ class ValidatorTest extends TestCase
     {
         // Act
         $result = Validator::isValidPassword("");
-        
+
         // Assert
         $this->assertFalse($result['valid']);
         $this->assertCount(5, $result['errors']);
@@ -134,7 +134,7 @@ class ValidatorTest extends TestCase
     {
         // Act
         $result = Validator::isValidPassword(null);
-        
+
         // Assert
         $this->assertFalse($result['valid']);
         $this->assertCount(5, $result['errors']);

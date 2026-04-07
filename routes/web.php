@@ -12,4 +12,3 @@ Route::post('/orders/simulate', [OrderController::class, 'simulate']);
 Route::post('/orders', [OrderController::class, 'store']);
 Route::get('/orders/{id}', [OrderController::class, 'show']);
 Route::post('/promo/validate', [OrderController::class, 'validatePromo']);
-

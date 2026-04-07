@@ -15,7 +15,7 @@ class OrderTotalTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $tomorrow = date('Y-m-d', strtotime('+1 day'));
 
         $this->promoCodes = [
@@ -36,12 +36,12 @@ class OrderTotalTest extends TestCase
     {
         // 2 pizzas a 12.50€ (sub=25) + 5 km (base=3.0) + 1kg + mardi 15h (surge=1.0) + pas de promo
         $result = PricingEngine::calculateOrderTotal(
-            $this->defaultItems, 
-            5, 
-            1, 
-            null, 
-            '15h', 
-            'mardi', 
+            $this->defaultItems,
+            5,
+            1,
+            null,
+            '15h',
+            'mardi',
             $this->promoCodes
         );
 
@@ -56,12 +56,12 @@ class OrderTotalTest extends TestCase
     {
         // Même scénario avec promo PERCENT20
         $result = PricingEngine::calculateOrderTotal(
-            $this->defaultItems, 
-            5, 
-            1, 
-            'PERCENT20', 
-            '15h', 
-            'mardi', 
+            $this->defaultItems,
+            5,
+            1,
+            'PERCENT20',
+            '15h',
+            'mardi',
             $this->promoCodes
         );
 
@@ -77,12 +77,12 @@ class OrderTotalTest extends TestCase
         // Vendredi à 20h : surge = 1.8
         // Livraison base = 3.0 * 1.8 = 5.4
         $result = PricingEngine::calculateOrderTotal(
-            $this->defaultItems, 
-            5, 
-            1, 
-            null, 
-            '20h', 
-            'vendredi', 
+            $this->defaultItems,
+            5,
+            1,
+            null,
+            '20h',
+            'vendredi',
             $this->promoCodes
         );
 
@@ -110,12 +110,12 @@ class OrderTotalTest extends TestCase
         $this->assertArrayHasKey('surge', $result);
         $this->assertArrayHasKey('total', $result);
 
-        $this->assertEquals(11.99, $result['subtotal']); // subtotal 
+        $this->assertEquals(11.99, $result['subtotal']); // subtotal
         $this->assertEquals(0.0, $result['discount']); // discount = 0 sans code promo
         $this->assertEquals(2.60, $result['deliveryFee']); // Arrondi à 2 décimales
         $this->assertEquals(14.59, $result['total']); // 11.99 + 2.6
     }
-    
+
     public function test_should_ensure_surge_applies_strictly_only_to_delivery(): void
     {
         // Ce test prouve bien que subtotal * surge N'EST PAS fait.
@@ -124,7 +124,7 @@ class OrderTotalTest extends TestCase
         // base = 2+2*0.5 = 3
         $expectedDeliveryWithSurge = 3.0 * 1.8;
         $this->assertEquals($expectedDeliveryWithSurge, $result['deliveryFee']);
-        
+
         $this->assertEquals($result['subtotal'] + $result['deliveryFee'], $result['total']);
     }
 
@@ -142,7 +142,7 @@ class OrderTotalTest extends TestCase
     public function test_should_throw_error_when_item_quantity_is_zero(): void
     {
         $items = [['name' => 'Pizza', 'price' => 12.50, 'quantity' => 0]];
-        
+
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("La quantité d'un article doit être supérieure à 0.");
         PricingEngine::calculateOrderTotal($items, 5, 1, null, '15h', 'mardi');
@@ -151,7 +151,7 @@ class OrderTotalTest extends TestCase
     public function test_should_throw_error_when_item_price_is_negative(): void
     {
         $items = [['name' => 'Pizza', 'price' => -2.00, 'quantity' => 1]];
-        
+
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("Le prix d'un article ne peut pas être négatif.");
         PricingEngine::calculateOrderTotal($items, 5, 1, null, '15h', 'mardi');

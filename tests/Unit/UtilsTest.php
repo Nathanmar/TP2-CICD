@@ -15,10 +15,10 @@ class UtilsTest extends TestCase
     {
         // Arrange
         $input = "hello";
-        
+
         // Act
         $result = Utils::capitalize($input);
-        
+
         // Assert
         $this->assertEquals("Hello", $result);
     }
@@ -27,10 +27,10 @@ class UtilsTest extends TestCase
     {
         // Arrange
         $input = "WORLD";
-        
+
         // Act
         $result = Utils::capitalize($input);
-        
+
         // Assert
         $this->assertEquals("World", $result);
     }
@@ -39,10 +39,10 @@ class UtilsTest extends TestCase
     {
         // Arrange
         $input = "";
-        
+
         // Act
         $result = Utils::capitalize($input);
-        
+
         // Assert
         $this->assertEquals("", $result);
     }
@@ -51,10 +51,10 @@ class UtilsTest extends TestCase
     {
         // Arrange
         $input = null;
-        
+
         // Act
         $result = Utils::capitalize($input);
-        
+
         // Assert
         $this->assertEquals("", $result);
     }
@@ -68,10 +68,10 @@ class UtilsTest extends TestCase
     {
         // Arrange
         $input = [10, 12, 14];
-        
+
         // Act
         $result = Utils::calculateAverage($input);
-        
+
         // Assert
         $this->assertEquals(12.0, $result);
     }
@@ -80,10 +80,10 @@ class UtilsTest extends TestCase
     {
         // Arrange
         $input = [15];
-        
+
         // Act
         $result = Utils::calculateAverage($input);
-        
+
         // Assert
         $this->assertEquals(15.0, $result);
     }
@@ -92,10 +92,10 @@ class UtilsTest extends TestCase
     {
         // Arrange
         $input = [];
-        
+
         // Act
         $result = Utils::calculateAverage($input);
-        
+
         // Assert
         $this->assertEquals(0.0, $result);
     }
@@ -104,10 +104,10 @@ class UtilsTest extends TestCase
     {
         // Arrange
         $input = [10, 11, 12];
-        
+
         // Act
         $result = Utils::calculateAverage($input);
-        
+
         // Assert
         $this->assertEquals(11.0, $result);
     }
@@ -116,10 +116,10 @@ class UtilsTest extends TestCase
     {
         // Arrange
         $input = null;
-        
+
         // Act
         $result = Utils::calculateAverage($input);
-        
+
         // Assert
         $this->assertEquals(0.0, $result);
     }
@@ -128,10 +128,10 @@ class UtilsTest extends TestCase
     {
         // Arrange
         $input = [-10, -5, 0];
-        
+
         // Act
         $result = Utils::calculateAverage($input);
-        
+
         // Assert
         $this->assertEquals(-5.0, $result);
     }
@@ -145,10 +145,10 @@ class UtilsTest extends TestCase
     {
         // Arrange
         $input = "Hello World";
-        
+
         // Act
         $result = Utils::slugify($input);
-        
+
         // Assert
         $this->assertEquals("hello-world", $result);
     }
@@ -157,10 +157,10 @@ class UtilsTest extends TestCase
     {
         // Arrange
         $input = " Spaces Everywhere ";
-        
+
         // Act
         $result = Utils::slugify($input);
-        
+
         // Assert
         $this->assertEquals("spaces-everywhere", $result);
     }
@@ -169,10 +169,10 @@ class UtilsTest extends TestCase
     {
         // Arrange
         $input = "C'est l'ete !";
-        
+
         // Act
         $result = Utils::slugify($input);
-        
+
         // Assert
         $this->assertEquals("cest-lete", $result);
     }
@@ -181,10 +181,10 @@ class UtilsTest extends TestCase
     {
         // Arrange
         $input = "";
-        
+
         // Act
         $result = Utils::slugify($input);
-        
+
         // Assert
         $this->assertEquals("", $result);
     }
@@ -193,10 +193,10 @@ class UtilsTest extends TestCase
     {
         // Arrange
         $input = null;
-        
+
         // Act
         $result = Utils::slugify($input);
-        
+
         // Assert
         $this->assertEquals("", $result);
     }
@@ -212,10 +212,10 @@ class UtilsTest extends TestCase
         $value = 5;
         $min = 0;
         $max = 10;
-        
+
         // Act
         $result = Utils::clamp($value, $min, $max);
-        
+
         // Assert
         $this->assertEquals($value, $result);
     }
@@ -226,10 +226,10 @@ class UtilsTest extends TestCase
         $value = -5;
         $min = 0;
         $max = 10;
-        
+
         // Act
         $result = Utils::clamp($value, $min, $max);
-        
+
         // Assert
         $this->assertEquals($min, $result);
     }
@@ -240,10 +240,10 @@ class UtilsTest extends TestCase
         $value = 15;
         $min = 0;
         $max = 10;
-        
+
         // Act
         $result = Utils::clamp($value, $min, $max);
-        
+
         // Assert
         $this->assertEquals($max, $result);
     }
@@ -254,10 +254,10 @@ class UtilsTest extends TestCase
         $value = 0;
         $min = 0;
         $max = 0;
-        
+
         // Act
         $result = Utils::clamp($value, $min, $max);
-        
+
         // Assert
         $this->assertEquals(0, $result);
     }
@@ -268,10 +268,10 @@ class UtilsTest extends TestCase
         $value = 10;
         $min = 0;
         $max = 10;
-        
+
         // Act
         $result = Utils::clamp($value, $min, $max);
-        
+
         // Assert
         $this->assertEquals(10, $result);
     }
@@ -370,7 +370,7 @@ class UtilsTest extends TestCase
             ['name' => 'Bob', 'grade' => 12, 'age' => 22],
             ['name' => 'Alice', 'grade' => 15, 'age' => 20],
         ];
-        
+
         $copy = [
             ['name' => 'Bob', 'grade' => 12, 'age' => 22],
             ['name' => 'Alice', 'grade' => 15, 'age' => 20],

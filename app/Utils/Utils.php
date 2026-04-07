@@ -39,13 +39,13 @@ class Utils
 
         // Supprimer les apostrophes sans les remplacer par un tiret
         $text = str_replace("'", "", $text);
-        
+
         // Remplacer tous les caractères non alphanumériques par des tirets
         $text = preg_replace('/[^a-zA-Z0-9]+/', '-', $text);
-        
+
         // Supprimer les tirets multiples et les tirets de début/fin
         $text = trim(preg_replace('/-+/', '-', $text), '-');
-        
+
         return strtolower($text);
     }
 
