@@ -275,4 +275,126 @@ class UtilsTest extends TestCase
         // Assert
         $this->assertEquals(10, $result);
     }
+
+    // ============================================
+    // sortStudents() TESTS (TDD)
+    // ============================================
+
+    public function test_should_sort_students_by_grade_ascending(): void
+    {
+        $students = [
+            ['name' => 'Alice', 'grade' => 15, 'age' => 20],
+            ['name' => 'Bob', 'grade' => 12, 'age' => 22],
+            ['name' => 'Charlie', 'grade' => 18, 'age' => 19],
+        ];
+
+        $expected = [
+            ['name' => 'Bob', 'grade' => 12, 'age' => 22],
+            ['name' => 'Alice', 'grade' => 15, 'age' => 20],
+            ['name' => 'Charlie', 'grade' => 18, 'age' => 19],
+        ];
+
+        $result = Utils::sortStudents($students, 'grade', 'asc');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function test_should_sort_students_by_grade_descending(): void
+    {
+        $students = [
+            ['name' => 'Alice', 'grade' => 15, 'age' => 20],
+            ['name' => 'Bob', 'grade' => 12, 'age' => 22],
+            ['name' => 'Charlie', 'grade' => 18, 'age' => 19],
+        ];
+
+        $expected = [
+            ['name' => 'Charlie', 'grade' => 18, 'age' => 19],
+            ['name' => 'Alice', 'grade' => 15, 'age' => 20],
+            ['name' => 'Bob', 'grade' => 12, 'age' => 22],
+        ];
+
+        $result = Utils::sortStudents($students, 'grade', 'desc');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function test_should_sort_students_by_name_ascending(): void
+    {
+        $students = [
+            ['name' => 'Charlie', 'grade' => 18, 'age' => 19],
+            ['name' => 'Alice', 'grade' => 15, 'age' => 20],
+            ['name' => 'Bob', 'grade' => 12, 'age' => 22],
+        ];
+
+        $expected = [
+            ['name' => 'Alice', 'grade' => 15, 'age' => 20],
+            ['name' => 'Bob', 'grade' => 12, 'age' => 22],
+            ['name' => 'Charlie', 'grade' => 18, 'age' => 19],
+        ];
+
+        $result = Utils::sortStudents($students, 'name', 'asc');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function test_should_sort_students_by_age_ascending(): void
+    {
+        $students = [
+            ['name' => 'Alice', 'grade' => 15, 'age' => 20],
+            ['name' => 'Bob', 'grade' => 12, 'age' => 22],
+            ['name' => 'Charlie', 'grade' => 18, 'age' => 19],
+        ];
+
+        $expected = [
+            ['name' => 'Charlie', 'grade' => 18, 'age' => 19],
+            ['name' => 'Alice', 'grade' => 15, 'age' => 20],
+            ['name' => 'Bob', 'grade' => 12, 'age' => 22],
+        ];
+
+        $result = Utils::sortStudents($students, 'age', 'asc');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function test_should_return_empty_array_for_null_input(): void
+    {
+        $result = Utils::sortStudents(null, 'name');
+        $this->assertEquals([], $result);
+    }
+
+    public function test_should_return_empty_array_for_empty_input(): void
+    {
+        $result = Utils::sortStudents([], 'name');
+        $this->assertEquals([], $result);
+    }
+
+    public function test_should_not_modify_the_original_array(): void
+    {
+        $original = [
+            ['name' => 'Bob', 'grade' => 12, 'age' => 22],
+            ['name' => 'Alice', 'grade' => 15, 'age' => 20],
+        ];
+        
+        $copy = [
+            ['name' => 'Bob', 'grade' => 12, 'age' => 22],
+            ['name' => 'Alice', 'grade' => 15, 'age' => 20],
+        ];
+
+        Utils::sortStudents($original, 'name', 'asc');
+        $this->assertEquals($copy, $original);
+    }
+
+    public function test_should_default_to_ascending_order(): void
+    {
+        $students = [
+            ['name' => 'Charlie', 'grade' => 18, 'age' => 19],
+            ['name' => 'Alice', 'grade' => 15, 'age' => 20],
+            ['name' => 'Bob', 'grade' => 12, 'age' => 22],
+        ];
+
+        $expected = [
+            ['name' => 'Alice', 'grade' => 15, 'age' => 20],
+            ['name' => 'Bob', 'grade' => 12, 'age' => 22],
+            ['name' => 'Charlie', 'grade' => 18, 'age' => 19],
+        ];
+
+        $result = Utils::sortStudents($students, 'name');
+        $this->assertEquals($expected, $result);
+    }
 }

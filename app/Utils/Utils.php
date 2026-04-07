@@ -56,4 +56,31 @@ class Utils
     {
         return max($min, min($value, $max));
     }
+
+    /**
+     * Trie un tableau d'étudiants selon un critère et un ordre donnés.
+     */
+    public static function sortStudents(?array $students, string $sortBy, string $order = 'asc'): array
+    {
+        if (empty($students)) {
+            return [];
+        }
+
+        $result = $students;
+
+        usort($result, function ($a, $b) use ($sortBy, $order) {
+            $valA = $a[$sortBy] ?? null;
+            $valB = $b[$sortBy] ?? null;
+
+            if ($valA === $valB) {
+                return 0;
+            }
+
+            $cmp = $valA <=> $valB;
+
+            return strtolower($order) === 'desc' ? -$cmp : $cmp;
+        });
+
+        return $result;
+    }
 }
