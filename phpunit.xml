@@ -16,8 +16,12 @@
         <include>
             <directory>app</directory>
         </include>
-    </source>
-    <php>
+    </source>    <coverage pathCoverage="false" ignoreDeprecatedCodeUnits="true" disableCodeCoverageIgnore="true">
+        <report>
+            <html outputDirectory="coverage"/>
+            <text outputFile="php://stdout" showUncoveredFiles="false"/>
+        </report>
+    </coverage>    <php>
         <env name="APP_ENV" value="testing"/>
         <env name="APP_MAINTENANCE_DRIVER" value="file"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
